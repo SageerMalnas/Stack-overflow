@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -7,7 +7,7 @@ import './Auth.css'
 import icon from '../../assets/icon.png'
 import AboutAuth from './AboutAuth'
 import { signup, login } from '../../actions/auth'
-
+import Chat from '../../components/Chatbot/chat'
 const Auth = () => {
   const [isSignup, setIsSignup] = useState(false)
   const [name, setName] = useState('')
@@ -16,6 +16,11 @@ const Auth = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate ()
+  useEffect(()=>{
+    if(!localStorage.getItem('otp-verfied')){
+      navigate('/otp-verify')
+    }
+      },[])
 
   const handleSwitch = () =>{
     setIsSignup(!isSignup)
@@ -92,6 +97,7 @@ const Auth = () => {
           {isSignup ? 'already have an account' : 'Don\'t have an account?'}
           <button type = 'button' className = 'handle-switch-btn' onClick = {handleSwitch}>{isSignup ? "Log in" : "Sign up"}</button>
         </p>
+        <Chat></Chat>
       </div>
     </section>
   )

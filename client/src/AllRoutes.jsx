@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import{Routes, Route} from 'react-router-dom'
+import{Routes, Route, useNavigate} from 'react-router-dom'
 
 import Home from './Pages/Home/Home'
 import Auth from './Pages/Auth/Auth'
@@ -10,11 +10,19 @@ import DisplayQuestion from './Pages/Questions/DisplayQuestion'
 import Tags from './Pages/Tags/Tags'
 import Users from './Pages/Users/Users'
 import UserProfile from './Pages/UserProfile/UserProfile'
+import Otpverify from './components/OtpAuth/Otpverify'
 
 const AllRoutes = () => {
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(!localStorage.getItem('otp-verfied')){
+      navigate('/otp-verify')
+    }
+      },[])
   return (
     <Routes>
       <Route path = '/' element = {<Home/>}/>
+      <Route path = '/otp-verify' element = {<Otpverify/>}/>
       <Route path = '/Auth' element = {<Auth/>}/>
       <Route path='/Questions' element={<Questions />}/>
       <Route path='/AskQuestion' element={<AskQuestion />}/>
